@@ -10,15 +10,11 @@ typedef struct {
   size_t capacity;
 } TV(T);
 
-#define NEW_VECTOR(T) JOIN(new_vector_, T)
-inline TV(T) * NEW_VECTOR(T)() {
-  TV(T) *to_return = malloc(sizeof(TV(T)));
-  *to_return = (TV(T)){.values = NULL, .size = 0, .capacity = 0};
-  return to_return;
-}
+#define NEW_VECTOR_(T) JOIN(new_vector_, T)
+inline TV(T) * NEW_VECTOR_(T)() { return calloc(1, sizeof(TV(T))); }
 
-#define NEW_VECTOR_WITH_CAPACITY(T) JOIN(new_vector_with_capacity_, T)
-inline TV(T) * NEW_VECTOR_WITH_CAPACITY(T)(size_t capacity) {
+#define NEW_VECTOR_WITH_CAPACITY_(T) JOIN(new_vector_with_capacity_, T)
+inline TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
   TV(T) *to_return = malloc(sizeof(TV(T)));
   to_return->values = malloc(sizeof(T) * capacity);
   to_return->size = 0;
@@ -27,9 +23,7 @@ inline TV(T) * NEW_VECTOR_WITH_CAPACITY(T)(size_t capacity) {
 }
 
 #define INIT_VECTOR_(T) JOIN(init_vector, T)
-inline void INIT_VECTOR_(T)(TV(T) * vec) {
-  *vec = (TV(T)){.values = NULL, .size = 0, .capacity = 0};
-}
+inline void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){}; }
 
 #define DEL_VECTOR_(T) JOIN(del_vector_, T)
 inline void DEL_VECTOR_(T)(TV(T) * vec) {

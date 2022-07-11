@@ -11,16 +11,10 @@ typedef struct {
 } TF(T);
 
 #define NEW_FIFO_(T) JOIN(new_fifo_, T)
-inline TF(T) * NEW_FIFO_(T)() {
-  TF(T) *to_return = malloc(sizeof(TF(T)));
-  *to_return = (TF(T)){.v1 = NULL, .v2 = NULL, .c1 = 0, .c2 = 0, .start = 0};
-  return to_return;
-}
+inline TF(T) * NEW_FIFO_(T)() { return calloc(1, sizeof(TF(T))); }
 
 #define INIT_FIFO_(T) JOIN(init_fifo_, T)
-inline void INIT_FIFO_(T)(TF(T) * fifo) {
-  *fifo = (TF(T)){.v1 = NULL, .v2 = NULL, .c1 = 0, .c2 = 0, .start = 0};
-}
+inline void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){}; }
 
 #define CLEAN_FIFO_(T) JOIN(clean_fifo_, T)
 inline void CLEAN_FIFO_(T)(TF(T) * fifo) {

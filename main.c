@@ -7,12 +7,37 @@
 #undef T
 
 #define T int
+#include "include/generic_ll.h"
+#undef T
+
+#define T unsigned
+#include "include/generic_ll.h"
+#undef T
+
+#define T int
 #include "include/generic_fifo.h"
 #undef T
 
 #define T unsigned
 #include "include/generic_fifo.h"
 #undef T
+
+size_t test_hash(int i) { return (size_t)i; }
+
+#define T int
+#define HASH_F test_hash
+#include "include/generic_set.h"
+#undef T
+#undef HASH_F
+
+size_t test_hash2(int i) { return (size_t)i; }
+
+#define T unsigned
+#define HASH_F test_hash2
+#include "include/generic_set.h"
+#undef T
+
+
 
 #include <stdio.h>
 
