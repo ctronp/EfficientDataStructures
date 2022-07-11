@@ -1,0 +1,10 @@
+#Ignore Everything
+/*
+!.gitignore
+
+#Except
+!include
+!.clang-format
+!CMakeLists.txt
+!main.c
+!README.md
