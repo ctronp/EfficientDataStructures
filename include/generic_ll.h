@@ -18,8 +18,8 @@ typedef struct TLNS(T) {
 
 typedef struct {
   struct TLNS(T) * values;
-  TLN(T) * first;
-  TLN(T) * last;
+  struct TLNS(T) * first;
+  struct TLNS(T) * last;
   size_t *lifo_free;
   size_t lifo_free_size;
   size_t lifo_free_capacity;
@@ -79,7 +79,10 @@ inline void APPEND_LEFT_LIST_(T)(TL(T) * list, T value) {
     pos = list->size++;
     list->values[pos].value = value;
   }
-  list->values[pos].next = list->first;
+  TLN(T) *const loc = &list->values[pos];
+
+  loc->next = list->first;
+  list->first = loc;
 }
 
 #define APPEND_RIGHT_LIST_(T) JOIN(append_right_list_, T)
@@ -107,8 +110,11 @@ inline void APPEND_RIGHT_LIST_(T)(TL(T) * list, T value) {
     pos = list->size++;
     list->values[pos].value = value;
   }
-  list->values[pos].next = NULL;
-  list->last->next = &list->values[pos];
+  TLN(T) *const loc = &list->values[pos];
+
+  loc->next = NULL;
+  list->last->next = loc;
+  list->last = loc;
 }
 
 #define CLEAN_LIST_(T) JOIN(clean_list_, T)
@@ -135,6 +141,7 @@ inline T POP_LEFT_LIST_(T)(TL(T) * list) {
     list->lifo_free =
         realloc(list->lifo_free, sizeof(size_t) * list->lifo_free_capacity);
   }
+  list->size--;
   list->lifo_free[list->lifo_free_size++] = pos;
   return value;
 }

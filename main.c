@@ -15,6 +15,14 @@
 #undef T
 
 #define T int
+#include "include/generic_dll.h"
+#undef T
+
+#define T unsigned
+#include "include/generic_dll.h"
+#undef T
+
+#define T int
 #include "include/generic_fifo.h"
 #undef T
 
@@ -36,8 +44,6 @@ size_t test_hash2(int i) { return (size_t)i; }
 #define HASH_F test_hash2
 #include "include/generic_set.h"
 #undef T
-
-
 
 #include <stdio.h>
 
