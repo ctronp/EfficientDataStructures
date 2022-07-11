@@ -23,7 +23,7 @@ int main() {
 }
 ```
 
-After including the header, the functions and structures will be created, these with named in sanke_case.
+After including the header, the functions and structures will be created, these with named in snake_case.
 
 ## Unnecessary files
 
