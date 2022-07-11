@@ -30,8 +30,8 @@ inline TDL(T) * NEW_D_LIST_(T)() { return calloc(1, sizeof(TDL(T))); }
 
 #define NEW_D_LIST_WITH_CAPACITY_(T) JOIN(new_d_list_with_capacity_, T)
 inline TDL(T) * NEW_D_LIST_WITH_CAPACITY_(T)(size_t capacity) {
-  TDL(T) *to_return = malloc(sizeof(TL(T)));
-  to_return->values = malloc(sizeof(TDL(T)) * capacity);
+  TDL(T) *to_return = malloc(sizeof(TDL(T)));
+  to_return->values = malloc(sizeof(TDLN(T)) * capacity);
   to_return->size = 0;
   to_return->capacity = capacity;
   to_return->first = 0;
@@ -92,7 +92,7 @@ inline void APPEND_RIGHT_D_LIST_(T)(TDL(T) * list, T value) {
   if (!list->capacity) {
     list->capacity = 1;
     list->size = 1;
-    list->values = malloc(sizeof(TLN(T)));
+    list->values = malloc(sizeof(TDLN(T)));
     list->first = list->values;
     list->last = list->values;
     list->values[0] = (TDLN(T)){.value = value, .prev = NULL, .next = NULL};
@@ -106,7 +106,7 @@ inline void APPEND_RIGHT_D_LIST_(T)(TDL(T) * list, T value) {
   } else if (list->size == list->capacity) {
     pos = list->size++;
     list->capacity <<= 1;
-    list->values = realloc(list->values, sizeof(TLN(T)) * list->capacity);
+    list->values = realloc(list->values, sizeof(TDLN(T)) * list->capacity);
     list->values[pos].value = value;
   } else {
     pos = list->size++;
@@ -132,7 +132,7 @@ inline void FIT_D_LIST_(T)(TDL(T) * list) {
   // O(n) complexity, so only lifo_free will be fit (O(1))
   list->lifo_free_capacity = list->lifo_free_size;
   list->lifo_free =
-      realloc(list->lifo_free, sizeof(TLN(T) *) * list->lifo_free_size);
+      realloc(list->lifo_free, sizeof(TDLN(T) *) * list->lifo_free_size);
 }
 
 #define POP_LEFT_D_LIST_(T) JOIN(pop_left_d_list_, T)
