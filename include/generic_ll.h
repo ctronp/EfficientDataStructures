@@ -1,3 +1,8 @@
+// if possible prefer vector (stack) or fifo
+// they have less overhead.
+//
+// if need to remove from both ends prefer Double Linked List
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,7 +33,7 @@ inline TL(T) * NEW_LIST_(T)() { return calloc(1, sizeof(TL(T))); }
 #define NEW_LIST_WITH_CAPACITY_(T) JOIN(new_list_with_capacity_, T)
 inline TL(T) * NEW_LIST_WITH_CAPACITY_(T)(size_t capacity) {
   TL(T) *to_return = malloc(sizeof(TL(T)));
-  to_return->values = malloc(sizeof(T) * capacity);
+  to_return->values = malloc(sizeof(TLN(T)) * capacity);
   to_return->size = 0;
   to_return->capacity = capacity;
   to_return->first = 0;
