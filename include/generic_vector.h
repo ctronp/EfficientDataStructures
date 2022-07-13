@@ -16,9 +16,9 @@ inline TV(T) * NEW_VECTOR_(T)() { return calloc(1, sizeof(TV(T))); }
 #define NEW_VECTOR_WITH_CAPACITY_(T) JOIN(new_vector_with_capacity_, T)
 inline TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
   TV(T) *const to_return = malloc(sizeof(TV(T)));
-  to_return->values = malloc(sizeof(T) * capacity);
-  to_return->size = 0;
-  to_return->capacity = capacity;
+  *to_return = (TV(T)){.values = malloc(sizeof(T) * capacity),
+                       to_return->size = 0,
+                       to_return->capacity = capacity};
   return to_return;
 }
 

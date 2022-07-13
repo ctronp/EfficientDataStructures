@@ -47,9 +47,6 @@ size_t test_hash2(int i) { return (size_t)i; }
 
 #include <stdio.h>
 
-#define REP(var, init, end)                                                    \
-  for (int(var) = (int)(init); (var) != (end); (var)++)
-
 int main() {
   fifo_int *fifo = new_fifo_int();
   del_fifo_int(fifo);
