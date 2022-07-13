@@ -3,7 +3,6 @@
 !.gitignore
 
 #Except
-!Google_tests
 !src
 !tests
 !.clang-format
