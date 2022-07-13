@@ -18,4 +18,4 @@ add_executable(main_test main.c)
 target_link_libraries(main_test headers-lib)
 
 
-add_subdirectory(Google_tests)
+#add_subdirectory(Google_tests)
