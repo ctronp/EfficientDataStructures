@@ -3,7 +3,9 @@
 !.gitignore
 
 #Except
-!include
+!Google_tests
+!src
+!tests
 !.clang-format
 !CMakeLists.txt
 !LICENSE

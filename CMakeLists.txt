@@ -12,8 +12,10 @@ set(CMAKE_BUILD_TYPE Debug)
 
 
 add_library(headers-lib INTERFACE)
-target_include_directories(headers-lib INTERFACE include/**)
+target_include_directories(headers-lib INTERFACE src/**)
 
 add_executable(main_test main.c)
 target_link_libraries(main_test headers-lib)
 
+
+add_subdirectory(Google_tests)
