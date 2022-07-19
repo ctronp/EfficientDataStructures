@@ -1,0 +1,5 @@
+[submodule "tests/MCT"]
+	path = tests/MCT
+	url = git@github.com:ctronp/MCT.git
+    branch = main
+    ignore = dirty

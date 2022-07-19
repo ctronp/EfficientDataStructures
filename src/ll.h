@@ -83,6 +83,7 @@ inline void APPEND_LEFT_LIST_(T)(TL(T) * list, T value) {
     list->values = malloc(sizeof(TLN(T)));
     list->first = 0;
     list->values[0] = (TLN(T)){.value = value, .next = NONE};
+    return;
   }
 
   size_t pos;
