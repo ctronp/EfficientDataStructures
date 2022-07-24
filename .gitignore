@@ -3,6 +3,7 @@
 !.gitignore
 
 #Except
+!.github
 !src
 !tests
 !.clang-format
