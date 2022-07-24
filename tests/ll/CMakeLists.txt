@@ -1,4 +1,4 @@
-file(GLOB ll_test_files "*.c")
+file(GLOB ll_test_files CONFIGURE_DEPENDS "*.c")
 
 foreach (test_file ${ll_test_files})
     get_filename_component(test_file_name ${test_file} NAME)
