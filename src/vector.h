@@ -10,26 +10,20 @@ typedef struct {
   size_t capacity;
 } TV(T);
 
-#define NEW_VECTOR(T) JOIN(new_vector_, T)
-inline TV(T) * NEW_VECTOR(T)() {
-  TV(T) *to_return = malloc(sizeof(TV(T)));
-  *to_return = (TV(T)){.values = NULL, .size = 0, .capacity = 0};
+#define NEW_VECTOR_(T) JOIN(new_vector_, T)
+inline TV(T) * NEW_VECTOR_(T)() { return calloc(1, sizeof(TV(T))); }
+
+#define NEW_VECTOR_WITH_CAPACITY_(T) JOIN(new_vector_with_capacity_, T)
+inline TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
+  TV(T) *const to_return = malloc(sizeof(TV(T)));
+  *to_return = (TV(T)){.values = malloc(sizeof(T) * capacity),
+                       to_return->size = 0,
+                       to_return->capacity = capacity};
   return to_return;
 }
 
-#define NEW_VECTOR_WITH_CAPACITY(T) JOIN(new_vector_with_capacity_, T)
-inline TV(T) * NEW_VECTOR_WITH_CAPACITY(T)(size_t capacity) {
-  TV(T) *to_return = malloc(sizeof(TV(T)));
-  to_return->values = malloc(sizeof(T) * capacity);
-  to_return->size = 0;
-  to_return->capacity = capacity;
-  return to_return;
-}
-
-#define INIT_VECTOR_(T) JOIN(init_vector, T)
-inline void INIT_VECTOR_(T)(TV(T) * vec) {
-  *vec = (TV(T)){.values = NULL, .size = 0, .capacity = 0};
-}
+#define INIT_VECTOR_(T) JOIN(init_vector_, T)
+inline void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){}; }
 
 #define DEL_VECTOR_(T) JOIN(del_vector_, T)
 inline void DEL_VECTOR_(T)(TV(T) * vec) {
@@ -48,21 +42,21 @@ inline void APPEND_VECTOR_(T)(TV(T) * vec, T value) {
   }
   if (vec->capacity == vec->size) {
     vec->capacity <<= 1;
-    vec->values = malloc(sizeof(T) * vec->capacity);
+    vec->values = realloc(vec->values, vec->capacity * sizeof(T));
   }
   vec->values[vec->size++] = value;
 }
 
 #define CONCAT_VEC_(T) JOIN(concat_vec_, T)
-inline void CONCAT_VEC_(T)(TV(T) * des, TV(T) * orig) {
+inline void CONCAT_VEC_(T)(TV(T) * des, TV(T) const *orig) {
   if (orig->size == 0)
     return;
 
-  const size_t orig_des_cap = des->capacity;
+  const size_t start_des_cap = des->capacity;
   while (des->capacity < des->size + orig->size) {
     des->capacity <<= 1;
   }
-  if (orig_des_cap != des->capacity) {
+  if (start_des_cap != des->capacity) {
     des->values = realloc(des->values, des->capacity * sizeof(T));
   }
   memcpy(&des->values[des->size], orig->values, orig->size * sizeof(T));
@@ -81,4 +75,4 @@ inline void FIT_VEC_(T)(TV(T) * vec) {
 }
 
 #define POP_VEC_(T) JOIN(pop_vec_, T)
-inline T POP_VEC_(T)(TV(T) * vec) { return vec->values[vec->size--]; }
+inline T POP_VEC_(T)(TV(T) * vec) { return vec->values[--vec->size]; }
