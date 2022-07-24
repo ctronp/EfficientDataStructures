@@ -22,9 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Pull Submodules
-        run: git submodule update --init --recursive
+        with:
+          submodules: true
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
