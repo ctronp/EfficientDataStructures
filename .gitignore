@@ -3,6 +3,7 @@
 !.gitignore
 
 #Except
+!.github
 !include
 !.clang-format
 !CMakeLists.txt
