@@ -11,10 +11,10 @@ typedef struct {
 } TV(T);
 
 #define NEW_VECTOR_(T) JOIN(new_vector_, T)
-inline TV(T) * NEW_VECTOR_(T)() { return calloc(1, sizeof(TV(T))); }
+TV(T) * NEW_VECTOR_(T)() { return calloc(1, sizeof(TV(T))); }
 
 #define NEW_VECTOR_WITH_CAPACITY_(T) JOIN(new_vector_with_capacity_, T)
-inline TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
+TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
   TV(T) *const to_return = malloc(sizeof(TV(T)));
   *to_return = (TV(T)){.values = malloc(sizeof(T) * capacity),
                        to_return->size = 0,
@@ -23,16 +23,16 @@ inline TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
 }
 
 #define INIT_VECTOR_(T) JOIN(init_vector_, T)
-inline void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){}; }
+void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){}; }
 
 #define DEL_VECTOR_(T) JOIN(del_vector_, T)
-inline void DEL_VECTOR_(T)(TV(T) * vec) {
+void DEL_VECTOR_(T)(TV(T) * vec) {
   if (vec->capacity)
     free(vec->values);
 }
 
 #define APPEND_VECTOR_(T) JOIN(append_vector_, T)
-inline void APPEND_VECTOR_(T)(TV(T) * vec, T value) {
+void APPEND_VECTOR_(T)(TV(T) * vec, T value) {
   if (vec->capacity == 0) {
     vec->capacity = 1;
     vec->size = 1;
@@ -48,7 +48,7 @@ inline void APPEND_VECTOR_(T)(TV(T) * vec, T value) {
 }
 
 #define CONCAT_VEC_(T) JOIN(concat_vec_, T)
-inline void CONCAT_VEC_(T)(TV(T) * des, TV(T) const *orig) {
+void CONCAT_VEC_(T)(TV(T) * des, TV(T) const *orig) {
   if (orig->size == 0)
     return;
 
@@ -64,10 +64,10 @@ inline void CONCAT_VEC_(T)(TV(T) * des, TV(T) const *orig) {
 }
 
 #define CLEAN_VEC_(T) JOIN(clean_vec_, T)
-inline void CLEAN_VEC_(T)(TV(T) * vec) { vec->size = 0; }
+void CLEAN_VEC_(T)(TV(T) * vec) { vec->size = 0; }
 
 #define FIT_VEC_(T) JOIN(fit_vec_, T)
-inline void FIT_VEC_(T)(TV(T) * vec) {
+void FIT_VEC_(T)(TV(T) * vec) {
   if (vec->size != vec->capacity) {
     vec->capacity = vec->size;
     vec->values = realloc(vec->values, vec->capacity * sizeof(T));
@@ -75,4 +75,4 @@ inline void FIT_VEC_(T)(TV(T) * vec) {
 }
 
 #define POP_VEC_(T) JOIN(pop_vec_, T)
-inline T POP_VEC_(T)(TV(T) * vec) { return vec->values[--vec->size]; }
+T POP_VEC_(T)(TV(T) * vec) { return vec->values[--vec->size]; }

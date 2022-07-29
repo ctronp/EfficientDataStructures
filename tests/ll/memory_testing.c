@@ -55,4 +55,30 @@ TEST("2 lists", "test appending and popping from 2 lists") {
   free(l2);
 }
 
+TEST("with capacity", "test appending and popping from a list with capacity") {
+  list_int *l1 = new_list_with_capacity_int(1000);
+  list_int *l2 = new_list_with_capacity_int(1000);
+
+  ASSERT_NE_PTR(NULL, l1)
+  ASSERT_NE_PTR(NULL, l2)
+
+  for (int i = 0; i < 1000; i++) {
+    append_left_list_int(l1, i);
+  }
+
+  for (int i = 0; i < 1000; i++) {
+    append_left_list_int(l2, i);
+  }
+
+  for (int i = 999; i >= 0; i--) {
+    int t1 = pop_left_list_int(l1);
+    ASSERT_EQ_INT(t1, pop_left_list_int(l2))
+    ASSERT_EQ_INT(i, t1)
+  }
+  del_list_int(l1);
+  del_list_int(l2);
+  free(l1);
+  free(l2);
+}
+
 END_TESTING

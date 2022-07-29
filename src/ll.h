@@ -29,7 +29,7 @@ typedef struct {
 } TL(T);
 
 #define NEW_LIST_(T) JOIN(new_list_, T)
-inline TL(T) * NEW_LIST_(T)() {
+TL(T) * NEW_LIST_(T)() {
   TL(T) *const to_return = malloc(sizeof(TL(T)));
   *to_return = (TL(T)){.values = NULL,
                        .first = NONE,
@@ -42,7 +42,7 @@ inline TL(T) * NEW_LIST_(T)() {
 }
 
 #define NEW_LIST_WITH_CAPACITY_(T) JOIN(new_list_with_capacity_, T)
-inline TL(T) * NEW_LIST_WITH_CAPACITY_(T)(size_t capacity) {
+TL(T) * NEW_LIST_WITH_CAPACITY_(T)(size_t capacity) {
   TL(T) *const to_return = malloc(sizeof(TL(T)));
   *to_return = (TL(T)){.values = malloc(sizeof(TLN(T)) * capacity),
                        .first = NONE,
@@ -55,7 +55,7 @@ inline TL(T) * NEW_LIST_WITH_CAPACITY_(T)(size_t capacity) {
 }
 
 #define INIT_LIST_(T) JOIN(init_list, T)
-inline void INIT_LIST_(T)(TL(T) *const list) {
+void INIT_LIST_(T)(TL(T) *const list) {
   *list = (TL(T)){.values = NULL,
                   .first = NONE,
                   .lifo_free = NULL,
@@ -66,7 +66,7 @@ inline void INIT_LIST_(T)(TL(T) *const list) {
 }
 
 #define DEL_LIST_(T) JOIN(del_list_, T)
-inline void DEL_LIST_(T)(TL(T) * list) {
+void DEL_LIST_(T)(TL(T) * list) {
   if (list->capacity) {
     free(list->values);
   }
@@ -76,7 +76,7 @@ inline void DEL_LIST_(T)(TL(T) * list) {
 }
 
 #define APPEND_LEFT_LIST_(T) JOIN(append_left_list_, T)
-inline void APPEND_LEFT_LIST_(T)(TL(T) * list, T value) {
+void APPEND_LEFT_LIST_(T)(TL(T) * list, T value) {
   if (!list->capacity) {
     list->capacity = 1;
     list->size = 1;
@@ -104,13 +104,13 @@ inline void APPEND_LEFT_LIST_(T)(TL(T) * list, T value) {
 }
 
 #define CLEAN_LIST_(T) JOIN(clean_list_, T)
-inline void CLEAN_LIST_(T)(TL(T) * list) {
+void CLEAN_LIST_(T)(TL(T) * list) {
   list->size = 0;
   list->lifo_free_size = 0;
 }
 
 #define FIT_LIST_(T) JOIN(fit_list_, T)
-inline void FIT_LIST_(T)(TL(T) * list) {
+void FIT_LIST_(T)(TL(T) * list) {
   // O(n) complexity, so only lifo_free will be fit (O(1))
   list->lifo_free_capacity = list->lifo_free_size;
   list->lifo_free =
@@ -118,7 +118,7 @@ inline void FIT_LIST_(T)(TL(T) * list) {
 }
 
 #define POP_LEFT_LIST_(T) JOIN(pop_left_list_, T)
-inline T POP_LEFT_LIST_(T)(TL(T) * list) {
+T POP_LEFT_LIST_(T)(TL(T) * list) {
   const size_t first_pos = list->first;
   list->first = list->values[first_pos].next;
   list->size--;

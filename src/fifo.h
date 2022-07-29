@@ -11,19 +11,19 @@ typedef struct {
 } TF(T);
 
 #define NEW_FIFO_(T) JOIN(new_fifo_, T)
-inline TF(T) * NEW_FIFO_(T)() { return calloc(1, sizeof(TF(T))); }
+TF(T) * NEW_FIFO_(T)() { return calloc(1, sizeof(TF(T))); }
 
 #define INIT_FIFO_(T) JOIN(init_fifo_, T)
-inline void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){}; }
+void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){}; }
 
 #define CLEAN_FIFO_(T) JOIN(clean_fifo_, T)
-inline void CLEAN_FIFO_(T)(TF(T) * fifo) {
+void CLEAN_FIFO_(T)(TF(T) * fifo) {
   fifo->start = 0;
   fifo->size = 0;
 }
 
 #define APPEND_FIFO_(T) JOIN(append_fifo_, T)
-inline void APPEND_FIFO_(T)(TF(T) * fifo, T value) {
+void APPEND_FIFO_(T)(TF(T) * fifo, T value) {
   if (!fifo->v1) {
     fifo->v1 = malloc(sizeof(T));
     fifo->v1[0] = value;
@@ -54,7 +54,7 @@ inline void APPEND_FIFO_(T)(TF(T) * fifo, T value) {
 }
 
 #define DEL_FIFO_(T) JOIN(del_fifo_, T)
-inline void DEL_FIFO_(T)(TF(T) * fifo) {
+void DEL_FIFO_(T)(TF(T) * fifo) {
   if (fifo->c1) {
     free(fifo->v1);
   }
@@ -64,7 +64,7 @@ inline void DEL_FIFO_(T)(TF(T) * fifo) {
 }
 
 #define POP_RIGHT_FIFO_(T) JOIN(pop_right_fifo_, T)
-inline T POP_RIGHT_FIFO_(T)(TF(T) * fifo) {
+T POP_RIGHT_FIFO_(T)(TF(T) * fifo) {
   const size_t pos_c1 = fifo->start + --fifo->size;
   if (pos_c1 < fifo->c1) {
     return fifo->v1[pos_c1];
@@ -74,7 +74,7 @@ inline T POP_RIGHT_FIFO_(T)(TF(T) * fifo) {
 }
 
 #define POP_LEFT_FIFO_(T) JOIN(pop_left_fifo_, T)
-inline T POP_LEFT_FIFO_(T)(TF(T) * fifo) {
+T POP_LEFT_FIFO_(T)(TF(T) * fifo) {
   const size_t pos_c1 = fifo->start++;
   fifo->size--;
 
