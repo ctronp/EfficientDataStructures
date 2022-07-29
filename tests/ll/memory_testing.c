@@ -75,6 +75,10 @@ TEST("with capacity", "test appending and popping from a list with capacity") {
     ASSERT_EQ_INT(t1, pop_left_list_int(l2))
     ASSERT_EQ_INT(i, t1)
   }
+  del_list_int(l1);
+  del_list_int(l2);
+  free(l1);
+  free(l2);
 }
 
 END_TESTING
