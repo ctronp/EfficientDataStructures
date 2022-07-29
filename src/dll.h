@@ -27,7 +27,8 @@ typedef struct {
 } TDL(T);
 
 #define NEW_D_LIST_(T) JOIN(new_d_list_, T)
-inline TDL(T) * NEW_D_LIST_(T)() {
+
+TDL(T) * NEW_D_LIST_(T)() {
   TDL(T) *const to_return = malloc(sizeof(TDL(T)));
   *to_return = (TDL(T)){.values = NULL,
                         .first = NONE,
@@ -41,7 +42,8 @@ inline TDL(T) * NEW_D_LIST_(T)() {
 }
 
 #define NEW_D_LIST_WITH_CAPACITY_(T) JOIN(new_d_list_with_capacity_, T)
-inline TDL(T) * NEW_D_LIST_WITH_CAPACITY_(T)(size_t capacity) {
+
+TDL(T) * NEW_D_LIST_WITH_CAPACITY_(T)(size_t capacity) {
   TDL(T) *to_return = malloc(sizeof(TDL(T)));
   *to_return = (TDL(T)){.values = malloc(sizeof(TDLN(T)) * capacity),
                         .first = NONE,
@@ -55,7 +57,8 @@ inline TDL(T) * NEW_D_LIST_WITH_CAPACITY_(T)(size_t capacity) {
 }
 
 #define INIT_D_LIST_(T) JOIN(init_d_list, T)
-inline void INIT_D_LIST_(T)(TDL(T) * list) {
+
+void INIT_D_LIST_(T)(TDL(T) * list) {
   *list = (TDL(T)){.values = NULL,
                    .first = NONE,
                    .last = NONE,
@@ -67,7 +70,8 @@ inline void INIT_D_LIST_(T)(TDL(T) * list) {
 }
 
 #define DEL_D_LIST_(T) JOIN(del_d_list_, T)
-inline void DEL_D_LIST_(T)(TDL(T) * list) {
+
+void DEL_D_LIST_(T)(TDL(T) * list) {
   if (list->capacity) {
     free(list->values);
   }
@@ -77,7 +81,8 @@ inline void DEL_D_LIST_(T)(TDL(T) * list) {
 }
 
 #define APPEND_LEFT_D_LIST_(T) JOIN(append_left_d_list_, T)
-inline void APPEND_LEFT_D_LIST_(T)(TDL(T) *const list, T value) {
+
+void APPEND_LEFT_D_LIST_(T)(TDL(T) *const list, T value) {
   if (!list->capacity) {
     list->capacity = 1;
     list->size = 1;
@@ -113,7 +118,8 @@ inline void APPEND_LEFT_D_LIST_(T)(TDL(T) *const list, T value) {
 }
 
 #define APPEND_RIGHT_D_LIST_(T) JOIN(append_right_d_list_, T)
-inline void APPEND_RIGHT_D_LIST_(T)(TDL(T) * list, T value) {
+
+void APPEND_RIGHT_D_LIST_(T)(TDL(T) * list, T value) {
   if (!list->capacity) {
     list->capacity = 1;
     list->size = 1;
@@ -149,13 +155,15 @@ inline void APPEND_RIGHT_D_LIST_(T)(TDL(T) * list, T value) {
 }
 
 #define CLEAN_D_LIST_(T) JOIN(clean_d_list_, T)
-inline void CLEAN_D_LIST_(T)(TDL(T) * list) {
+
+void CLEAN_D_LIST_(T)(TDL(T) * list) {
   list->size = 0;
   list->lifo_free_size = 0;
 }
 
 #define FIT_D_LIST_(T) JOIN(fit_d_list_, T)
-inline void FIT_D_LIST_(T)(TDL(T) * list) {
+
+void FIT_D_LIST_(T)(TDL(T) * list) {
   // O(n) complexity, so only lifo_free will be fit (O(1))
   list->lifo_free_capacity = list->lifo_free_size;
   list->lifo_free =
@@ -163,7 +171,8 @@ inline void FIT_D_LIST_(T)(TDL(T) * list) {
 }
 
 #define POP_LEFT_D_LIST_(T) JOIN(pop_left_d_list_, T)
-inline T POP_LEFT_D_LIST_(T)(TDL(T) * list) {
+
+T POP_LEFT_D_LIST_(T)(TDL(T) * list) {
   const size_t pos = list->first;
   const T value = list->values[pos].value;
 
@@ -188,7 +197,8 @@ inline T POP_LEFT_D_LIST_(T)(TDL(T) * list) {
 }
 
 #define POP_RIGHT_D_LIST_(T) JOIN(pop_right_d_list_, T)
-inline T POP_RIGHT_D_LIST_(T)(TDL(T) * list) {
+
+T POP_RIGHT_D_LIST_(T)(TDL(T) * list) {
   const size_t pos = list->last;
   const T value = list->values[pos].value;
 

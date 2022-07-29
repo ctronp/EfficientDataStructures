@@ -1,6 +1,6 @@
 
-add_library(MCT INTERFACE)
-target_include_directories(MCT INTERFACE MCT/MCT.h)
+add_library(mct INTERFACE)
+target_link_directories(mct INTERFACE MCT)
 
 add_subdirectory(ll)
 add_subdirectory(vector)

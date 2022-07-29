@@ -5,8 +5,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
 include(CTest)
 
-
 add_library(headers-lib INTERFACE)
-target_include_directories(headers-lib INTERFACE src/**)
+target_link_directories(headers-lib INTERFACE src)
 
 add_subdirectory(tests)
