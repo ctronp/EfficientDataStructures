@@ -13,6 +13,14 @@ typedef struct {
 #define NEW_FIFO_(T) JOIN(new_fifo_, T)
 TF(T) * NEW_FIFO_(T)() { return calloc(1, sizeof(TF(T))); }
 
+#define NEW_FIFO_WITH_CAPACITY_(T) JOIN(new_fifo_with_capacity_, T)
+TF(T) * NEW_FIFO_WITH_CAPACITY_(T)(size_t capacity) {
+  TF(T) *const fifo = malloc(sizeof(TF(T)));
+  *fifo = (TF(T)){
+      .v1 = malloc(sizeof(T) * capacity), .v2 = NULL, .c1 = capacity, .c2 = 0};
+  return fifo;
+}
+
 #define INIT_FIFO_(T) JOIN(init_fifo_, T)
 void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){}; }
 
