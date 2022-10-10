@@ -20,6 +20,8 @@ TF(T) * NEW_FIFO_WITH_CAPACITY_(T)(size_t capacity) {
   fifo->v2 = NULL;
   fifo->c1 = capacity;
   fifo->c2 = 0;
+  fifo->start = 0;
+  fifo->size = 0;
   return fifo;
 }
 

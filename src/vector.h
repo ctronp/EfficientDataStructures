@@ -23,7 +23,7 @@ TV(T) * NEW_VECTOR_WITH_CAPACITY_(T)(size_t capacity) {
 }
 
 #define INIT_VECTOR_(T) JOIN(init_vector_, T)
-void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){0}; }
+void INIT_VECTOR_(T)(TV(T) * vec) { *vec = (TV(T)){}; }
 
 #define DEL_VECTOR_(T) JOIN(del_vector_, T)
 void DEL_VECTOR_(T)(TV(T) * vec) {
