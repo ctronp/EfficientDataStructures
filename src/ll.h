@@ -54,7 +54,7 @@ TL(T) * NEW_LIST_WITH_CAPACITY_(T)(size_t capacity) {
   return to_return;
 }
 
-#define INIT_LIST_(T) JOIN(init_list, T)
+#define INIT_LIST_(T) JOIN(init_list_, T)
 void INIT_LIST_(T)(TL(T) *const list) {
   *list = (TL(T)){.values = NULL,
                   .first = NONE,
@@ -135,4 +135,57 @@ T POP_LEFT_LIST_(T)(TL(T) * list) {
   list->lifo_free[list->lifo_free_size++] = first_pos;
 
   return list->values[first_pos].value;
+}
+
+#define POP_WITH_INDEX_(T) JOIN(pop_with_index_, T)
+T POP_WITH_INDEX_(T)(TL(T) * list, size_t index) {
+  // O(n)
+
+  const size_t first = list->first;
+
+  if (index == 0) {
+    return pop_left_list_int(list);
+  }
+  list->size--;
+
+  size_t temp1 = list->values[first].next;
+  for (size_t i = 1; i < index; i++) {
+    temp1 = list->values[temp1].next;
+  }
+
+  if (list->lifo_free_capacity == 0) {
+    list->lifo_free_capacity = 1;
+    list->lifo_free =
+        realloc(list->lifo_free, sizeof(size_t) * list->lifo_free_capacity);
+  } else if (list->lifo_free_size == list->lifo_free_capacity) {
+    list->lifo_free_capacity <<= 1;
+    list->lifo_free =
+        realloc(list->lifo_free, sizeof(size_t) * list->lifo_free_capacity);
+  }
+  list->lifo_free[list->lifo_free_size++] = temp1;
+
+  return list->values[temp1].value;
+}
+
+#define POP_WITH_POS_(T) JOIN(pop_with_pos_, T)
+T POP_WITH_POS_(T)(TL(T) * list, size_t pos) {
+  // O(n)
+
+
+  if (pos == list->first) {
+    return pop_left_list_int(list);
+  }
+
+  if (list->lifo_free_capacity == 0) {
+    list->lifo_free_capacity = 1;
+    list->lifo_free =
+        realloc(list->lifo_free, sizeof(size_t) * list->lifo_free_capacity);
+  } else if (list->lifo_free_size == list->lifo_free_capacity) {
+    list->lifo_free_capacity <<= 1;
+    list->lifo_free =
+        realloc(list->lifo_free, sizeof(size_t) * list->lifo_free_capacity);
+  }
+  list->lifo_free[list->lifo_free_size++] = pos;
+
+  return list->values[pos].value;
 }
