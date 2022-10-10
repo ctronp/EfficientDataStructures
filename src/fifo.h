@@ -26,7 +26,7 @@ TF(T) * NEW_FIFO_WITH_CAPACITY_(T)(size_t capacity) {
 }
 
 #define INIT_FIFO_(T) JOIN(init_fifo_, T)
-void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){}; }
+void INIT_FIFO_(T)(TF(T) * fifo) { *fifo = (TF(T)){NULL, NULL, 0, 0, 0, 0}; }
 
 #define CLEAN_FIFO_(T) JOIN(clean_fifo_, T)
 void CLEAN_FIFO_(T)(TF(T) * fifo) {
